@@ -20,14 +20,7 @@ public class MainTest {
         weight.add(0.1);
         weight.add(0.1);
 
-        ArrayList<Boolean> mains = new ArrayList<>();
-        mains.add(true);
-        mains.add(true);
-        mains.add(false);
-        mains.add(false);
-        mains.add(false);
-
-        Compar compar = new Compar(data, weight, mains);
+        Compar compar = new Compar(data, weight);
         System.out.println("Best is object №" + (compar.compareWithTOPSIS() + 1));
     }
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Compar {
     private ArrayList<Double[]> data;
     private ArrayList<Double> weight;
-    private ArrayList<Boolean> mains;
     private int cols;
     private int rows;
     private double[][] normalizedData;
@@ -16,7 +15,7 @@ public class Compar {
     private double[] sin;
     private double[] pi;
 
-    public Compar(ArrayList<Double[]> data, ArrayList<Double> weight, ArrayList<Boolean> mains){
+    public Compar(ArrayList<Double[]> data, ArrayList<Double> weight){
         try{
             int size = data.get(0).length;
             for(Double[] d : data){
@@ -26,13 +25,12 @@ public class Compar {
                             "not correct input table");
                 }
             }
-            if(size != weight.size() || size != mains.size()){
+            if(size != weight.size()){
                 throw new IllegalArgumentException(
-                        "data columns must be equalent weight and mains columns");
+                        "data columns must be equalent weight columns");
             }
             this.data = data;
             this.weight = weight;
-            this.mains = mains;
             this.cols = weight.size();
             this.rows = data.size();
         }catch (IllegalArgumentException e){
@@ -91,13 +89,8 @@ public class Compar {
                 if (max < weightedData[i][j])
                     max = weightedData[i][j];
             }
-            if(mains.get(j)) {
-                pos[j] = max;
-                neg[j] = min;
-            }else{
-                pos[j] = min;
-                neg[j] = max;
-            }
+            pos[j] = max;
+            neg[j] = min;
         }
         this.pos = pos;
         this.neg = neg;
@@ -142,8 +135,8 @@ public class Compar {
         for (int i = 0; i < rows; i++){
             pi[i] = sin[i]/(sin[i] + sip[i]);
         }
-        //for (int i = 0; i < rows; i++)
-        //    System.out.println(pi[i]);
+        for (int i = 0; i < rows; i++)
+            System.out.println(pi[i]);
     }
 
     private int resultOfTOPSIS(){
