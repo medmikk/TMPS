@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Compar {
     private ArrayList<Double[]> data;
     private ArrayList<Double> weight;
+    private ArrayList<Double> sign;
     private int cols;
     private int rows;
     private double[][] normalizedData;
@@ -14,8 +15,10 @@ public class Compar {
     private double[] sip;
     private double[] sin;
     private double[] pi;
+    private ArrayList<Double> pi_Moora = new ArrayList<Double>();
+    private double sum;
 
-    public Compar(ArrayList<Double[]> data, ArrayList<Double> weight){
+    public Compar(ArrayList<Double[]> data, ArrayList<Double> weight, ArrayList<Double> sign){
         try{
             int size = data.get(0).length;
             for(Double[] d : data){
@@ -31,6 +34,7 @@ public class Compar {
             }
             this.data = data;
             this.weight = weight;
+            this.sign = sign;
             this.cols = weight.size();
             this.rows = data.size();
         }catch (IllegalArgumentException e){
@@ -91,6 +95,7 @@ public class Compar {
             }
             pos[j] = max;
             neg[j] = min;
+
         }
         this.pos = pos;
         this.neg = neg;
@@ -100,6 +105,23 @@ public class Compar {
 //        System.out.print("\npositive:\n");
 //        for(int i = 0; i < cols; i++)
 //            System.out.print(pos[i] + "\t");
+    }
+
+    private void countMOORA(){
+
+        for (int i = 0; i < weightedData.length; i++){
+            for (int j = 0; j < weightedData[0].length; j++){
+                if (sign.get(j) == 1.0){
+                    sum += weightedData[i][j];
+                }
+                if (sign.get(j) == 0.0){
+                    sum -= weightedData[i][j];
+                }
+            }
+            this.pi_Moora.add(sum);
+            sum = 0;
+        }
+        System.out.println(pi_Moora);
     }
 
     private double countSumOfRowP(int i){
@@ -150,6 +172,13 @@ public class Compar {
         return res;
     }
 
+
+
+    public void compareWithMOORA(){
+        setNormalizedData();
+        setWeightedData();
+        countMOORA();
+    }
 
     public int compareWithTOPSIS(){
         setNormalizedData();

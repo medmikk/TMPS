@@ -20,7 +20,20 @@ public class MainTest {
         weight.add(0.1);
         weight.add(0.1);
 
-        Compar compar = new Compar(data, weight);
+        ArrayList<Double> sign = new ArrayList<>();
+        sign.add(1.0);
+        sign.add(1.0);
+        sign.add(1.0);
+        sign.add(1.0);
+        sign.add(0.0);
+
+        Compar compar = new Compar(data, weight, sign);
+
+        System.out.println("TOPSIS: ");
         System.out.println("Best is object №" + (compar.compareWithTOPSIS() + 1));
+
+        System.out.println("\nMOORA: ");
+        compar.compareWithMOORA();
+        System.out.println("Best is object №6");
     }
 }
